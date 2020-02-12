@@ -1,6 +1,6 @@
 var express =  require('express');
 var router = express.Router();
-var userModel = require('./seguridad.model');
+var imgModel = require('./seguridad.model');
 
 router.get('/users/all', (req, res)=>{
     return res.status(200).json(imgModel.getAll());
