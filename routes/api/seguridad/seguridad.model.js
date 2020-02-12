@@ -92,4 +92,16 @@ imgModel.update = (id, { imgurloriginal, imgurlpreview })=>{
   return updateImg;
 }
 
+imgModel.deleteByCode = (id)=>{
+  var newCollection = [];
+  newCollection = imgCollection.filter(
+    (o)=>{
+      return o.userID !== id;
+    }
+  );
+  imgCollection = newCollection;
+  writeToFile();
+  return true;
+}
+
 module.exports = imgModel;
