@@ -18,4 +18,10 @@ router.post('/users/new', (req, res)=>{
   return res.status(200).json(newImg);
 });
 
+router.put('/users/upd/:id', (req, res)=>{
+  var id = parseInt(req.params.id);
+  var updImg = imgModel.update( id, req.body);
+  return res.status(200).json(updImg);
+});
+
 module.exports = router;

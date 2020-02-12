@@ -34,7 +34,7 @@ imgModel.getAll = ()=>{
 imgModel.getById = (id)=>{
   var filteredImgs = imgCollection.filter(
     (o)=>{
-      return o.userID === id;
+      return o.imgID === id;
     }
   );
   if(filteredImgs.length){
@@ -55,11 +55,41 @@ imgModel.addNew = ({ imgtitle, imgurloriginal, imgurlpreview, imgalbum }  )=>{
       imgAlbum: imgalbum
     }
   );
-  newImg.userID = imgCollection.length + 1;
+  newImg.imgID = imgCollection.length + 1;
 
   imgCollection.push(newImg);
   writeToFile();
   return newImg;
+}
+
+imgModel.update = (id, { imgurloriginal, imgurlpreview })=>{
+ var updatingImg = imgCollection.filter(
+   (o, i)=>{
+     return o.imgID === id;
+   }
+ );
+ if(updatingImg && updatingImg.length>0){
+   updatingImg = updatingImg[0];
+ } else {
+   return null;
+ }
+ var updateImg = {};
+ var newUpdatedCollection = imgCollection.map(
+   (o, i)=>{
+     if(o.imgID === id){
+       updateImg = Object.assign({},
+          o,
+         { imgUrlOriginal: imgurloriginal, imgUrlPreview:imgurlpreview}
+       );
+       return updateImg;
+     }else{
+       return o;
+     }
+   }
+ );
+  imgCollection = newUpdatedCollection;
+  writeToFile();
+  return updateImg;
 }
 
 module.exports = imgModel;
